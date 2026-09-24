@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User Profiles
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && (request.auth.uid == userId || resource == null);
+    }
+
+    // Courses
+    match /courses/{courseId} {
+      allow read: if true;
+      allow create, update, delete: if true; // Managed by instructors & students joining
+    }
+
+    // Class Memberships (Strict SEC Enrollment Records)
+    match /class_memberships/{membershipId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if request.auth != null;
+    }
+
+    // Class Announcements (SEC and ALL_SEC)
+    match /class_announcements/{announcementId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Assignments
+    match /assignments/{assignmentId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Posts (Student & Faculty posts)
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+
+    // Schedule Events
+    match /schedule/{scheduleId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

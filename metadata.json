@@ -1,0 +1,6 @@
+{
+  "name": "Sochool Academic Hub",
+  "description": "A digital campus academic hub featuring interactive weekly schedule, course management, assignment submissions, campus feed, and real-time messaging powered by Firebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

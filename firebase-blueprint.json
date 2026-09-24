@@ -1,0 +1,191 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile for students and faculty instructors",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "instructor"] },
+        "avatar": { "type": "string" },
+        "studentId": { "type": "string" },
+        "institution": { "type": "string" },
+        "gradeLevel": { "type": "string" },
+        "bio": { "type": "string" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Academic course or workshop managed by instructors and co-instructors with section (SEC) support",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["regular", "workshop"] },
+        "instructor": { "type": "string" },
+        "instructorId": { "type": "string" },
+        "coInstructors": { "type": "array" },
+        "instructorAvatar": { "type": "string" },
+        "location": { "type": "string" },
+        "enrolledCount": { "type": "number" },
+        "enrolledStudents": { "type": "array" },
+        "enrolledStudentSections": { "type": "object" },
+        "sections": { "type": "array" },
+        "sectionSchedules": { "type": "array" },
+        "selectedSection": { "type": "string" },
+        "hasAssignments": { "type": "boolean" },
+        "color": { "type": "string" },
+        "description": { "type": "string" },
+        "cancelledSessions": { "type": "array" }
+      },
+      "required": ["code", "title", "instructor", "type"]
+    },
+    "ClassMembership": {
+      "title": "ClassMembership",
+      "description": "Tracks student/instructor enrollment in a specific class and SEC",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "class_id": { "type": "string" },
+        "sec_id": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "instructor"] },
+        "joined_at": { "type": "number" },
+        "userName": { "type": "string" },
+        "userAvatar": { "type": "string" },
+        "studentId": { "type": "string" },
+        "institution": { "type": "string" }
+      },
+      "required": ["user_id", "class_id", "sec_id", "role", "joined_at"]
+    },
+    "ClassAnnouncement": {
+      "title": "ClassAnnouncement",
+      "description": "Announcements scoped to a specific SEC or ALL_SEC",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "announcement_id": { "type": "string" },
+        "class_id": { "type": "string" },
+        "sec_id": { "type": "string" },
+        "scope": { "type": "string", "enum": ["SEC", "ALL_SEC"] },
+        "author_id": { "type": "string" },
+        "author_name": { "type": "string" },
+        "author_avatar": { "type": "string" },
+        "author_role": { "type": "string", "enum": ["student", "instructor"] },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "created_at": { "type": "number" },
+        "updated_at": { "type": "number" }
+      },
+      "required": ["class_id", "sec_id", "scope", "author_id", "title", "content", "created_at"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Feed post or student discussion bound to class_id and sec_id",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "post_id": { "type": "string" },
+        "class_id": { "type": "string" },
+        "sec_id": { "type": "string" },
+        "author_id": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorAvatar": { "type": "string" },
+        "authorBadge": { "type": "string" },
+        "timeAgo": { "type": "string" },
+        "courseTag": { "type": "string" },
+        "content": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "attachment": { "type": "object" },
+        "likes": { "type": "number" },
+        "likedBy": { "type": "array" },
+        "commentsCount": { "type": "number" },
+        "comments": { "type": "array" },
+        "createdAt": { "type": "number" },
+        "created_at": { "type": "number" },
+        "updatedAt": { "type": "number" },
+        "isEdited": { "type": "boolean" }
+      },
+      "required": ["authorName", "content"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Course assignments and homework",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "courseId": { "type": "string" },
+        "courseName": { "type": "string" },
+        "title": { "type": "string" },
+        "module": { "type": "string" },
+        "points": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["Not Submitted", "Submitted", "Graded"] },
+        "instructions": { "type": "array" },
+        "templateFileName": { "type": "string" },
+        "templateFileUrl": { "type": "string" },
+        "submission": { "type": "object" }
+      },
+      "required": ["courseId", "title", "points", "dueDate"]
+    },
+    "ScheduleEvent": {
+      "title": "ScheduleEvent",
+      "description": "Timetable and course schedule entries",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "code": { "type": "string" },
+        "courseId": { "type": "string" },
+        "section": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "day": { "type": "string", "enum": ["MON", "TUE", "WED", "THU", "FRI"] },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "displayTime": { "type": "string" },
+        "location": { "type": "string" },
+        "warningNote": { "type": "string" },
+        "colorTheme": { "type": "string" },
+        "isCancelled": { "type": "boolean" },
+        "cancellationReason": { "type": "string" }
+      },
+      "required": ["title", "code", "day", "startTime", "endTime"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile collection"
+    },
+    "/courses/{courseId}": {
+      "schema": "Course",
+      "description": "Academic and workshop courses"
+    },
+    "/class_memberships/{membershipId}": {
+      "schema": "ClassMembership",
+      "description": "Class and SEC enrollments with student and instructor roles"
+    },
+    "/class_announcements/{announcementId}": {
+      "schema": "ClassAnnouncement",
+      "description": "SEC-scoped and ALL_SEC global announcements"
+    },
+    "/assignments/{assignmentId}": {
+      "schema": "Assignment",
+      "description": "Course assignments and homework"
+    },
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Community and course feed posts scoped to SEC"
+    },
+    "/schedule/{scheduleId}": {
+      "schema": "ScheduleEvent",
+      "description": "Timetable and course schedule entries"
+    }
+  }
+}
